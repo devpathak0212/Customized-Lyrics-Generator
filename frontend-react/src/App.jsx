@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-const API_URL = "http://localhost:8000"
+const API_URL = "https://lyrics-generator-backend-2.onrender.com"
 
 function parseLyrics(raw) {
   if (!raw) return []
