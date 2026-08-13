@@ -1,6 +1,20 @@
 import sys
 import os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "generation"))
+
+from huggingface_hub import snapshot_download
+
+CHROMA_PATH = os.path.join(os.path.dirname(__file__), "..", "vector_database", "chroma_store_v2")
+
+if not os.path.exists(CHROMA_PATH) or not os.listdir(CHROMA_PATH):
+    print("chroma_store_v2 not found locally — downloading from Hugging Face...")
+    snapshot_download(
+        repo_id="Casellite/lyrics-chroma-store",
+        repo_type="dataset",
+        local_dir=CHROMA_PATH,
+    )
+    print("Download complete.")
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

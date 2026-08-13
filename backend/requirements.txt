@@ -4,4 +4,5 @@ fastembed
 google-genai
 python-dotenv
 fastapi
+huggingface_hub
 uvicorn
