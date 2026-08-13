@@ -1,0 +1,7 @@
+streamlit
+chromadb
+fastembed
+google-genai
+python-dotenv
+fastapi
+uvicorn

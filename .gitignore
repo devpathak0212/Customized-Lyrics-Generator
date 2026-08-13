@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+node_modules/
+frontend-react/dist/
+data/raw_lyrics.csv
+data/clean_lyrics.csv
+vector_database/chroma_store/
+vector_database/chroma_store_v2/
