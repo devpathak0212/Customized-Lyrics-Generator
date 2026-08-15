@@ -9,7 +9,7 @@ from fastembed import TextEmbedding
 
 load_dotenv()
 
-GEMINI_MODEL = "gemini-flash-latest"
+GEMINI_MODEL = "gemini-flash-lite-latest"
 
 
 def load_genai_client():
