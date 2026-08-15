@@ -184,7 +184,7 @@ function App() {
       <section className="title-section">
         <div className="tab" />
         <h1>The Songwriter's Archive</h1>
-        <p className="subtitle">Original verses, drawn from the record</p>
+        <p className="subtitle">Generating Lyrics Just Like Your Favourite Singers</p>
       </section>
 
       <div className={`scroll-hint ${showScrollHint ? 'visible' : 'hidden'}`}>scroll to begin ↓</div>
@@ -194,7 +194,7 @@ function App() {
           <form onSubmit={handleSubmit} className="form">
             <div className="form-row">
               <div className="field">
-                <label>Search the archive for</label>
+                <label>The Singer</label>
                 <input
                   type="text"
                   placeholder="Taylor Swift, Ed Sheeran, Adele…"
@@ -204,7 +204,7 @@ function App() {
               </div>
 
               <div className="field">
-                <label>The temperament</label>
+                <label>The Mood</label>
                 <input
                   type="text"
                   placeholder="Melancholic, triumphant, yearning…"
@@ -215,7 +215,7 @@ function App() {
             </div>
 
             <div className="field">
-              <label>What the verse is about</label>
+              <label>What do you want the lyrics to be about</label>
               <textarea
                 placeholder="Leaving home and never quite arriving anywhere else"
                 value={topic}
@@ -227,7 +227,7 @@ function App() {
             <div className="divider" />
 
             <button type="submit" className="cta">
-              Pull the record
+              Generate the Lyrics
             </button>
           </form>
 
@@ -236,7 +236,7 @@ function App() {
       </section>
 
       <footer className="footer">
-        <p>your.email@example.com</p>
+        <p>Casellite</p>
         <p className="copyright">© {new Date().getFullYear()} The Songwriter's Archive</p>
       </footer>
     </div>
