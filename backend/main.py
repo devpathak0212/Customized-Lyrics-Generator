@@ -36,7 +36,8 @@ app = FastAPI()
 # Allow the React frontend (running on a different port/domain) to call this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # we'll tighten this later once deployed
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
