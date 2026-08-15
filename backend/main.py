@@ -61,28 +61,34 @@ def health_check():
 
 @app.post("/generate")
 def generate(req: GenerateRequest):
-    corrected_singer, is_known = correct_and_verify_artist(client, req.singer.strip())
+    try:
+        corrected_singer, is_known = correct_and_verify_artist(client, req.singer.strip())
 
-    songs = retrieve_songs(embed_model, collection, corrected_singer, req.mood.strip(), req.topic.strip())
+        songs = retrieve_songs(embed_model, collection, corrected_singer, req.mood.strip(), req.topic.strip())
 
-    if songs:
-        style_profile = extract_style_profile(client, corrected_singer, songs)
-        lyrics = generate_final_lyrics(client, corrected_singer, req.mood.strip(), req.topic.strip(), style_profile)
+        if songs:
+            style_profile = extract_style_profile(client, corrected_singer, songs)
+            lyrics = generate_final_lyrics(client, corrected_singer, req.mood.strip(), req.topic.strip(), style_profile)
+            return {
+                "status": "found_in_database",
+                "corrected_singer": corrected_singer,
+                "songs_used": [s["title"] for s in songs],
+                "lyrics": lyrics,
+            }
+        elif is_known:
+            lyrics = generate_without_retrieval(client, corrected_singer, req.mood.strip(), req.topic.strip())
+            return {
+                "status": "known_artist_no_database",
+                "corrected_singer": corrected_singer,
+                "lyrics": lyrics,
+            }
+        else:
+            return {
+                "status": "unknown_artist",
+                "message": f"We couldn't recognize '{req.singer}' as a known artist. Please enter a more well-known artist name.",
+            }
+    except Exception as e:
         return {
-            "status": "found_in_database",
-            "corrected_singer": corrected_singer,
-            "songs_used": [s["title"] for s in songs],
-            "lyrics": lyrics,
-        }
-    elif is_known:
-        lyrics = generate_without_retrieval(client, corrected_singer, req.mood.strip(), req.topic.strip())
-        return {
-            "status": "known_artist_no_database",
-            "corrected_singer": corrected_singer,
-            "lyrics": lyrics,
-        }
-    else:
-        return {
-            "status": "unknown_artist",
-            "message": f"We couldn't recognize '{req.singer}' as a known artist. Please enter a more well-known artist name.",
+            "status": "error",
+            "message": "The lyric generator is temporarily busy. Please try again in a moment.",
         }

@@ -36,12 +36,10 @@ function App() {
   const [error, setError] = useState('')
   const [showScrollHint, setShowScrollHint] = useState(true)
 
-  // lock scrolling during the loading screen, restore it otherwise
   useEffect(() => {
     document.body.style.overflow = view === 'loading' ? 'hidden' : 'auto'
   }, [view])
 
-  // show/hide the "scroll to begin" hint based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollHint(window.scrollY < 80)
@@ -88,7 +86,6 @@ function App() {
 
   const sections = result?.lyrics ? parseLyrics(result.lyrics) : []
 
-  // ---------- LOADING VIEW ----------
   if (view === 'loading') {
     return (
       <div className="loading-screen">
@@ -98,7 +95,6 @@ function App() {
     )
   }
 
-  // ---------- RESULT VIEW ----------
   if (view === 'result' && result) {
     return (
       <div className="result-page">
@@ -170,6 +166,10 @@ function App() {
             <p className="error">{result.message}</p>
           )}
 
+          {result.status === 'error' && (
+            <p className="error">{result.message}</p>
+          )}
+
           <button type="button" className="cta secondary" onClick={handleGenerateNew}>
             Generate a new one
           </button>
@@ -178,13 +178,12 @@ function App() {
     )
   }
 
-  // ---------- LANDING VIEW (default) ----------
   return (
     <div className="landing">
       <section className="title-section">
         <div className="tab" />
         <h1>The Songwriter's Archive</h1>
-        <p className="subtitle">Generating Lyrics Just Like Your Favourite Singers</p>
+        <p className="subtitle">Original verses, drawn from the record</p>
       </section>
 
       <div className={`scroll-hint ${showScrollHint ? 'visible' : 'hidden'}`}>scroll to begin ↓</div>
@@ -194,7 +193,7 @@ function App() {
           <form onSubmit={handleSubmit} className="form">
             <div className="form-row">
               <div className="field">
-                <label>The Singer</label>
+                <label>Search the archive for</label>
                 <input
                   type="text"
                   placeholder="Taylor Swift, Ed Sheeran, Adele…"
@@ -204,7 +203,7 @@ function App() {
               </div>
 
               <div className="field">
-                <label>The Mood</label>
+                <label>The temperament</label>
                 <input
                   type="text"
                   placeholder="Melancholic, triumphant, yearning…"
@@ -215,7 +214,7 @@ function App() {
             </div>
 
             <div className="field">
-              <label>What do you want the lyrics to be about</label>
+              <label>What the verse is about</label>
               <textarea
                 placeholder="Leaving home and never quite arriving anywhere else"
                 value={topic}
@@ -227,7 +226,7 @@ function App() {
             <div className="divider" />
 
             <button type="submit" className="cta">
-              Generate the Lyrics
+              Pull the record
             </button>
           </form>
 
@@ -236,7 +235,7 @@ function App() {
       </section>
 
       <footer className="footer">
-        <p>Casellite</p>
+        <p>your.email@example.com</p>
         <p className="copyright">© {new Date().getFullYear()} The Songwriter's Archive</p>
       </footer>
     </div>
